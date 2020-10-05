@@ -1,12 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.3.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
 }
 
-group = 'com.seonhyeokjun.javaproject.project'
+group = 'kr.co.seonhyeokjun'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 configurations {
     compileOnly {
@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.h2database:h2'
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
