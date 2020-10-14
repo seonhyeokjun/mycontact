@@ -3,6 +3,8 @@ package com.seonhyeokjun.javaproject.project.mycontact.service;
 import com.seonhyeokjun.javaproject.project.mycontact.controller.dto.PersonDto;
 import com.seonhyeokjun.javaproject.project.mycontact.domian.Person;
 import com.seonhyeokjun.javaproject.project.mycontact.domian.dto.Birthday;
+import com.seonhyeokjun.javaproject.project.mycontact.exception.PersonNotFoundException;
+import com.seonhyeokjun.javaproject.project.mycontact.exception.RenameIsNotPermittedException;
 import com.seonhyeokjun.javaproject.project.mycontact.repository.PersonRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -10,10 +12,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,6 +35,19 @@ class PersonServiceTest {
 
     @Mock
     private PersonRepository personRepository;
+
+    @Test
+    void getAll(){
+        when(personRepository.findAll(any(Pageable.class)))
+                .thenReturn(new PageImpl<>(Lists.newArrayList(new Person("martin"), new Person("dennis"), new Person("tony"))));
+
+        Page<Person> result = personService.getAll(PageRequest.of(0,3));
+
+        assertThat(result.getNumberOfElements()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("martin");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("dennis");
+        assertThat(result.getContent().get(2).getName()).isEqualTo("tony");
+    }
 
     @Test
     void getPeopleByName(){
@@ -76,7 +92,7 @@ class PersonServiceTest {
         when(personRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () ->  personService.modify(1L, mockPersonDto()));
+        assertThrows(PersonNotFoundException.class, () ->  personService.modify(1L, mockPersonDto()));
     }
 
     @Test
@@ -84,7 +100,7 @@ class PersonServiceTest {
         when(personRepository.findById(1L))
                 .thenReturn(Optional.of(new Person("tony")));
 
-        assertThrows(RuntimeException.class, () -> personService.modify(1L, mockPersonDto()));
+        assertThrows(RenameIsNotPermittedException.class, () -> personService.modify(1L, mockPersonDto()));
     }
 
     @Test
@@ -102,7 +118,7 @@ class PersonServiceTest {
         when(personRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> personService.modify(1L, "daniel"));
+        assertThrows(PersonNotFoundException.class, () -> personService.modify(1L, "daniel"));
     }
 
     @Test
@@ -120,7 +136,7 @@ class PersonServiceTest {
         when(personRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> personService.delete(1L));
+        assertThrows(PersonNotFoundException.class, () -> personService.delete(1L));
     }
 
     @Test
