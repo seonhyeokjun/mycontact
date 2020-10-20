@@ -6,4 +6,5 @@
 
 # 개발적용
 <img width="1472" alt="스크린샷 2020-10-20 오후 12 29 00" src="https://user-images.githubusercontent.com/37436822/96537205-a8d59800-12d0-11eb-861e-5b23d19112f0.png">
+<img width="1402" alt="스크린샷 2020-10-20 오후 12 29 29" src="https://user-images.githubusercontent.com/37436822/96537256-c30f7600-12d0-11eb-9609-846f7a62a415.png">
 
