@@ -1,7 +1,9 @@
 package com.seonhyeokjun.javaproject.project.mycontact.controller;
 
-import com.seonhyeokjun.javaproject.project.mycontact.domian.Group;
+import com.seonhyeokjun.javaproject.project.mycontact.domian.Grouppeople;
 import com.seonhyeokjun.javaproject.project.mycontact.domian.Person;
+import com.seonhyeokjun.javaproject.project.mycontact.service.GroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +12,17 @@ import java.util.List;
 @RequestMapping(value = "/api/group")
 @RestController
 public class GroupController {
+    @Autowired
+    private GroupService groupService;
+
     @GetMapping
-    public List<Group> getAll(){
-        return null;  // Group 전체 정보 가져오기
+    public List<Grouppeople> getAll(){
+        return groupService.getAll();  // Group 전체 정보 가져오기
     }
 
     @GetMapping("/{id}")
-    public Group getGroup(@PathVariable Long id){
-        return null; // 특정 Group 정보 가져오기
+    public Grouppeople getGroup(@PathVariable Long id){
+        return groupService.getGroup(id); // 특정 Group 정보 가져오기
     }
 
     @PostMapping

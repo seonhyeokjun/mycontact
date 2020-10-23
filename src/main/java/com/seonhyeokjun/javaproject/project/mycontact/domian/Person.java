@@ -1,5 +1,6 @@
 package com.seonhyeokjun.javaproject.project.mycontact.domian;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.seonhyeokjun.javaproject.project.mycontact.controller.dto.PersonDto;
 import com.seonhyeokjun.javaproject.project.mycontact.domian.dto.Birthday;
 import lombok.*;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
